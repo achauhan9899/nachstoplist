@@ -2,46 +2,20 @@
 <html>
 <head>
   <link rel="stylesheet" href="Google Sheet.css">
-  <script src="Google Sheet.js"></script>
 </head>
 <body>
   <div class="container">
     <form method="post" action="https://script.google.com/macros/s/AKfycbx3e_-O4W_RGhIPVOiffXiYukwFlvPclVdsUtHKNPXzgfOHWbHw95mXTUjGx5AW8qVc/exec" name="contact-form">
       <h4>NACH STOP LIST</h4>
-      <input type="number" name="file-number" placeholder="FILE NUMBER" id="fileNumber" oninput="fetchDetails()">
-      <input type="text" name="customer-name" placeholder="CUSTOMER NAME" id="customerName">
-      <input type="text" name="vehicle-number" placeholder="VEHICLE NUMBER" id="vehicleNumber">
-      <input type="text" name="vehicle-model" placeholder="VEHICLE MODEL" id="vehicleModel">
+      <input type="text" name="file-number" placeholder="FILE NUMBER" id="fileNumber" oninput="fetchDetails()">
+      <input type="text" name="customer-name" placeholder="CUSTOMER NAME" id="customerName" readonly>
+      <input type="text" name="vehicle-number" placeholder="VEHICLE NUMBER" id="vehicleNumber" readonly>
+      <input type="text" name="vehicle-model" placeholder="VEHICLE MODEL" id="vehicleModel" readonly>
       <input type="submit" value="Submit" id="submit">
     </form>
+    <div class="error" id="message" style="display: none;">Please enter the number correctly</div>
+    <div class="loader" style="display: none;" id="fetchLoader"></div>
   </div>
-
-  <script>
- function fetchDetails() {
-    const fileNumber = document.getElementById('fileNumber').value; // Get the value of file number input
-
-    fetch('https://script.googleusercontent.com/macros/echo?user_content_key=LUGQot8ULDo4EE1vDKi1XHR33qUKSE3XLk_iV86FPsflO4HLM-9g9r4kEPfe9Ki2RpGiK9oQhFsaHmzdjCO04pMr8KHd8xM0m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnHOvyci_60ZFpyqXZkBnYtyViFIQ-_qnfD_FevmNVk3Cn7BaSuAL7_vhC9BzA16llzg931m6WZjZAHsDfvltXnY9HAelqyy4LQ&lib=Miy6B6UcqCOifjJiMiuGnFyeTdAXsPvv2')
-        .then(response => response.json()) // Parse JSON response
-        .then(data => {
-            const foundData = data.find(item => item["FILE NUMBER"] == fileNumber); // Find data with matching file number
-            if (foundData) {
-                // Set values in input fields
-                document.getElementById('customerName').value = foundData["CUSTOMER NAME"];
-                document.getElementById('vehicleNumber').value = foundData["VEHICLE NUMBER"];
-                document.getElementById('vehicleModel').value = foundData["VEHICLE MODEL"];
-            } else {
-                // If no data found, clear input fields
-                document.getElementById('customerName').value = "";
-                document.getElementById('vehicleNumber').value = "";
-                document.getElementById('vehicleModel').value = "";
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}
-
-    
-  </script>
+  <script src="Google Sheet.js"></script>
 </body>
 </html>
